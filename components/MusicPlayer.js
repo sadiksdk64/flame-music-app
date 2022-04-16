@@ -3,7 +3,8 @@ import React, {useState} from 'react';
 import {Image} from 'react-native';
 import * as Progress from 'react-native-progress';
 
-const MusicPlayer = ({open, setOpen}) => {
+const MusicPlayer = ({open, setOpen, MusicModule}) => {
+
   return (
     <Modal isOpen={open} onClose={() => setOpen(false)} safeAreaTop={true}>
       <View
@@ -116,10 +117,12 @@ const MusicPlayer = ({open, setOpen}) => {
                 style={{height: 30, width: 30}}
               />
               <View bg="white" p="5" borderRadius="40">
-                <Image
-                  source={require('../assets/images/pause.png')}
-                  style={{height: 30, width: 30}}
-                />
+                <Pressable onPress={() =>  MusicModule.pauseSong()}>
+                  <Image
+                    source={require('../assets/images/pause.png')}
+                    style={{height: 30, width: 30}}
+                  />
+                </Pressable>
               </View>
               <Image
                 source={require('../assets/images/next.png')}

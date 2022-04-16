@@ -14,6 +14,8 @@ import android.media.MediaPlayer;
 import android.util.Log;
 
 public class MusicModule extends ReactContextBaseJavaModule {
+    MediaPlayer mediaPlayer = new MediaPlayer();
+
     MusicModule(ReactApplicationContext context) {
         super(context);
     }
@@ -26,7 +28,7 @@ public class MusicModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void playSong() {
         String url = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"; // your URL here
-        MediaPlayer mediaPlayer = new MediaPlayer();
+//        MediaPlayer mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioAttributes(
                 new AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -37,11 +39,24 @@ public class MusicModule extends ReactContextBaseJavaModule {
         try {
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepare(); // might take long! (for buffering, etc)
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mediaPlayer.start();
+                }
+            });
+//            mediaPlayer.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mediaPlayer.start();
 
         Log.d("CalendarModule", "Playing song ");
     }
+
+    @ReactMethod
+    public void pauseSong() {
+        mediaPlayer.pause();
+        Log.d("CalendarModule", "Paused song ");
+    }
+
 }

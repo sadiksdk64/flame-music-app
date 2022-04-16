@@ -67,7 +67,7 @@ const Discography = () => {
       </ScrollView>
 
 
-      <MusicPlayer open={open} setOpen={setOpen}/>
+      <MusicPlayer open={open} setOpen={setOpen} MusicModule={MusicModule}/>
       
 
     </View>
